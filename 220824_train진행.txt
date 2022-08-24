@@ -1,0 +1,21 @@
+8/24일 시도
+mmrotate으로 FAIR1M2.0 데이터를 넣어 train 후 AP, mAP, accuracy 등의 값 얻기
+
+참고자료 : 네이버 블로그
+https://blog.naver.com/PostView.naver?blogId=ziippy&logNo=222827285489&categoryNo=24&parentCategoryNo=0&viewDate=&currentPage=1&postListTopCurrentPage=1&from=postView&userTopListOpen=true&userTopListCount=5&userTopListManageOpen=false&userTopListCurrentPage=1
+
+시행 순서
+1. mmrotate 파일 내부의 data 파일에 xml에서 txt파일로 변환 완료한 FAIR1M데이터셋을 넣는다(train, validation, image)
+
+2. config 파일 준비 - 'configs/oriented_rcnn'에서 복사한 'oriented_rcnn_r50_fpn_6x_ssdd_le90.py'을 복사해서
+_base_ = [
+    '../_base_/datasets/dotav1.py', '../_base_/schedules/schedule_3x.py',
+    '../_base_/default_runtime.py' ]   으로 바꿔준다.
+
+3. configs/_base_/datasets 폴더에 있는 ssdd.py 를 복사해서 'dotav1.py'을 만든 후,
+상단에 dataset_type, data_root,
+하단에 data의 train, val, test의 ann_file, img_prefix루트를 바꾸어준다.
+
+4. 로그 변경 및 evaluation, optimizer, learning_rate, epoch, checkpoint등의 값 변경은 임의로 한다.
+
+5. 학습 진행
